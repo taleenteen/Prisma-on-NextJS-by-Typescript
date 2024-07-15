@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import GoogleProvider from "next-auth/providers/google";
 
 const prisma = new PrismaClient();
 
@@ -28,10 +29,23 @@ export const authOptions = {
             id: user.id,
             name: user.name,
             email: user.email,
+            role: user.role,
           };
         } else {
           throw new Error("Invalid email or password");
         }
+      },
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: `${profile.given_name} ${profile.family_name}`,
+          email: profile.email,
+          image: profile.picture,
+        };
       },
     }),
   ],
@@ -43,14 +57,20 @@ export const authOptions = {
     jwt: async ({ token, user }) => {
       if (user) {
         token.id = user.id;
+        token.role = user.role;
       }
       return token;
     },
     session: async ({ session, token }) => {
       if (session.user) {
         session.user.id = token.id;
+        session.user.role = token.role;
+        session.user.image = token.picture;
       }
       return session;
+    },
+    async redirect({ baseUrl }) {
+      return `${baseUrl}/profile`;
     },
   },
 };
