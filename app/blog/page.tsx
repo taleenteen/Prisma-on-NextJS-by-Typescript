@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
 
-const List = () => {
+const BlogList = () => {
   const [posts, setPosts] = useState([])
   const [search, setSearch] = useState('')
   const [categories, setCategories] = useState([])
@@ -42,16 +42,6 @@ const List = () => {
     fetchPosts()
   }
 
-  const deletePost = async (id: number) => {
-    if (confirm('Are you sure you want to delete this post?')) {
-      try {
-        await axios.delete(`/api/posts/${id}`)
-        fetchPosts()
-      } catch (error) {
-        console.error('Failed to delete the post', error)
-      }
-    }
-  }
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -93,70 +83,29 @@ const List = () => {
           </button>
         </div>
       </div>
-      <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Title
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Category
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
   {posts.map((post: any) => (
-    <tr key={post.id}>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm font-medium text-gray-900">
-          {post.title}
-        </div>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm font-medium text-gray-900">
-          {post.category ? post.category.name : 'No category'}
-        </div>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-        <Link
-          className="text-indigo-600 hover:text-indigo-900 mr-4"
-          href={`/edit/${post.id}`}
-        >
-          Edit
-        </Link>
-        <button
-          onClick={() => deletePost(post.id)}
-          className="text-red-600 hover:text-red-900"
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
-  ))}
-</tbody>
-        </table>
+    <div key={post.id} className="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <a href="#">
+        <img className="rounded-t-lg w-full h-48 object-cover" src="https://pbs.twimg.com/media/GSX6dHIXIAAspeR?format=jpg&name=4096x4096" alt="" />
+      </a>
+      <div className="p-5">
+        <a href="#">
+          <h5 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">{post.title}</h5>
+        </a>
+        <p className="mb-3 text-gray-700 dark:text-gray-400">{post.content}</p>
+        <a href={`/blog/${post.id}`} className="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Read more
+          <svg className="w-4 h-4 ml-1" viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M1 5h12M9 1l4 4-4 4" />
+          </svg>
+        </a>
       </div>
-      <Link
-        className="mt-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        href="/create"
-      >
-        Create a New Post
-      </Link>
+    </div>
+  ))}
+</div>
     </div>
   )
 }
 
-export default List
+export default BlogList
