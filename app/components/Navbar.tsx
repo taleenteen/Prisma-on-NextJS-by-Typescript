@@ -51,12 +51,17 @@ export default function NavBar() {
           <FcHome className="text-4xl mr-2" />
         </Link>
         <div className="flex items-center justify-center gap-4">
-          
-          <Link
+        <Link
             href="/blog"
             className="rounded-md bg-indigo-600 px-4 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            This is admin
+            Blog
+          </Link>
+          <Link
+            href="/manage-user"
+            className="rounded-md bg-indigo-600 px-4 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Manage User
           </Link>
           <button
             onClick={() => signOut({ callbackUrl: '/' })}
