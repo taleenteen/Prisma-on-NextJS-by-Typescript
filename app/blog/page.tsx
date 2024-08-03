@@ -87,7 +87,7 @@ const BlogList = () => {
   {posts.map((post: any) => (
     <div key={post.id} className="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
       <a href="#">
-        <img className="rounded-t-lg w-full h-48 object-cover" src="https://pbs.twimg.com/media/GSX6dHIXIAAspeR?format=jpg&name=4096x4096" alt="" />
+        <img className="rounded-t-lg w-full h-48 object-cover" src="https://play-lh.googleusercontent.com/phUhJzNvyZTpbUhQmN3oaj0bHL0pQ_tOeBLjlF_l9z8qK7zogZbYO0ttd3jTGTHdAQ" alt="" />
       </a>
       <div className="p-5">
         <a href="#">

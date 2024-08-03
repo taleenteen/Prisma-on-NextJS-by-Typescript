@@ -31,7 +31,7 @@ const DataContainer: FC<ContainerProps> = ({ title, content,categoryId,categorie
     .map((cat) => (
       <div
         key={cat.id}
-        className={`px-4 py-2 border rounded-md bg-blue-500 text-white`}
+        className={`px-4 py-2 border rounded-md bg-blue-500 mt-3 text-white`}
       >
         {cat.name}
       </div>
